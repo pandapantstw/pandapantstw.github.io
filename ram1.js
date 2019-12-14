@@ -13,8 +13,8 @@ function attack_village() {
 
 function fill_units() {
   document.forms[0].spy.value = 1;
-  document.forms[0].ram.value = 2;
-  document.forms[0].axe.value = 100;
+  document.forms[0].ram.value = 4;
+  document.forms[0].axe.value = 50;
 }
 
 if (screen == "report") {
