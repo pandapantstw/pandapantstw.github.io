@@ -70,7 +70,16 @@ function fillCats() {
   
   var num_cats = building_cats[building_levels[cat_index] - 1];
   var max_cats = document.forms[0].catapult.outerHTML.match(/data-all-count="(\d+)"/)[1];
-  if (max_cats < 2*num_cats) document.forms[0].spy.value = 1;
+  var spy = 0;
+  if (max_cats < 2*num_cats) {
+    spy = 1;
+  }
+  building_levels[cat_index]--;
+  if (getCatIndex(building_levels) == building_levels.length) {
+    spy = 1;
+  }
+  
+  document.forms[0].spy.value = spy;
   document.forms[0].axe.value = 50;
   document.forms[0].input.value = xy;
   document.forms[0].catapult.value = num_cats;
@@ -91,7 +100,6 @@ function selectCatAndUpdateCookie() {
   
   var options = document.forms[0].building.options;
   for (i = 0; i < options.length; i++) {
-    console.log(options[i].value);
     if (building_ids[cat_index] == options[i].value) {
       document.forms[0].building.selectedIndex = i;
       break;
