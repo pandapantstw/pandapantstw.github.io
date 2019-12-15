@@ -46,8 +46,6 @@ if (screen == "report") {
   var xy = cat_cookie[0];
   cat_cookie.shift();
   
-  document.forms[0].spy.value = 1;
-  document.forms[0].ram.value = 2;
   document.forms[0].axe.value = 50;
   document.forms[0].input.value = xy;
   document.forms[0].catapult.value = building_cats[cat_cookie[0] - 1];
