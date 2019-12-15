@@ -26,7 +26,6 @@ function fill_units(xy) {
 
 if (screen == "am_farm") {
   var village_list = window.top.$("#plunder_list tr:not(:first-child):visible");
-  console.log("length ="+village_list.length);
   for (i = 1; i < village_list.length; i++) {
     var tds = village_list[i].getElementsByTagName("td");
     var xy = tds[3].innerHTML.split("(")[1].split(")")[0];
