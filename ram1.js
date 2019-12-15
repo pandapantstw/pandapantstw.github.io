@@ -13,8 +13,7 @@ function attack_village() {
   window.location.href = world_url + "/game.php?village=" + attacker_village_id + "&screen=place&target=" + defender_village_id;
 }
 
-function fill_units() {
-  var xy = window.location.href.match(/xy=([|\d]+)/)[1];
+function fill_units(xy) {
   var wall = window.location.href.match(/wall=([\d]+)/)[1];
   if (wall > wall_rams.length - 1) wall = wall_rams.length - 1;
   document.forms[0].input.value = xy;
@@ -38,7 +37,9 @@ if (screen == "am_farm") {
 } else if (screen == "report") {
   attack_village();
 } else if (screen == "place") {
-  fill_units();
+  var xy = window.location.href.match(/xy=([|\d]+)/);
+  if (xy == undefined) window.location.href = world_url + "/game.php?screen=am_farm";
+  else fill_units(xy[1]);
 } else {
   console.log("No command for " + screen);
 }
