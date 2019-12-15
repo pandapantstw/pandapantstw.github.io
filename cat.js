@@ -66,7 +66,7 @@ function fillCats() {
     return;
   }
   
-  console.log("Catting " + building_ids[cat_index]);
+  console.log("Catting level " + building_levels[cat_index] + " " + building_ids[cat_index]);
   
   var num_cats = building_cats[building_levels[cat_index] - 1];
   var max_cats = document.forms[0].catapult.outerHTML.match(/data-all-count="(\d+)"/)[1];
