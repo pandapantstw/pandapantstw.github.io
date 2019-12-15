@@ -37,16 +37,25 @@ function setCatCookie(xy, buildings) {
   setCookie("cat", xy + "," + buildings.join(","));
 }
 
+function fillCats() {
+  var cat_cookie = getCookie("cat").split(",");
+  var xy = cat_cookie[0];
+  cat_cookie.shift();
+  
+  var num_cats = building_cats[cat_cookie[0] - 1];
+  var max_cats = document.forms[0].catapult.outerHTML.match(/data-all-count="(\d+)"/)[1];
+  if (max_cats < 2*num_cats) document.forms[0].spy.value = 1;
+  document.forms[0].axe.value = 50;
+  document.forms[0].input.value = xy;
+  document.forms[0].catapult.value = num_cats;
+}
+
 if (screen == "report") {
   var scraping = scrape_report();
   setCatCookie(scraping.def_xy, scraping.building_levels);
   window.location.href = world_url + "/game.php?screen=place";
 } else if (screen == "place") {
-  var cat_cookie = getCookie("cat").split(",");
-  var xy = cat_cookie[0];
-  cat_cookie.shift();
-  
-  document.forms[0].axe.value = 50;
-  document.forms[0].input.value = xy;
-  document.forms[0].catapult.value = building_cats[cat_cookie[0] - 1];
+  fill_cats();
+} else {
+  console.log("No command for " + screen);
 }
