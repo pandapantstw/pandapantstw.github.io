@@ -55,7 +55,7 @@ if (screen == "report") {
   setCatCookie(scraping.def_xy, scraping.building_levels);
   window.location.href = world_url + "/game.php?screen=place";
 } else if (screen == "place") {
-  fill_cats();
+  fillCats();
 } else {
   console.log("No command for " + screen);
 }
