@@ -14,19 +14,33 @@ function goto(params) {
 }
 
 function doMarket(){
-  var wood = document.getElementById("wood").innerText;
-  var clay = document.getElementById("stone").innerText;
-  var iron = document.getElementById("iron").innerText;
+  var wood_available = document.getElementById("wood").innerText;
+  var clay_available = document.getElementById("stone").innerText;
+  var iron_available = document.getElementById("iron").innerText;
 
-  var merch = document.getElementById("market_merchant_available_count").innerText;
-  if (merch == 0) {
+  var merch_available = document.getElementById("market_merchant_available_count").innerText;
+  if (merch_available == 0) {
     console.log("Done trading");
     return;
   }
+  
+  var merch_used = 0;
+  var wood_offered = 0;
+  var clay_offered = 0;
+  var iron_offered = 0;
+  
+  var offer_rows = window.top.$("#own_offers_table tr:not(:first-child):visible");
+  for (i = 0; i < offer_rows.length - 1; i++) {
+    var tds = offer_rows[i].getElementsByTagName("td");
+    var offering = tds[1].getElementsByTagName("span")[1].getAttribute("title");
+    var amt = parseInt(tds[1].innerText.replace(".", ""));
+    if (offering == "Iron") iron_offered += amt;
+    if (offering == "Clay") clay_offered += amt;
+    if (offering == "Wood") wood_offered += amt;
+  }
 
-  document.forms["own_offer_form"].sell.value=sell_amt;
-  document.forms["own_offer_form"].buy.value=buy_amt;
-  document.forms["own_offer_form"].multi.value = Math.ceil(merch / 2);
+  document.forms["own_offer_form"].sell.value = sell_amt;
+  document.forms["own_offer_form"].buy.value = buy_amt;
   document.forms["own_offer_form"].submit();
 }
 
