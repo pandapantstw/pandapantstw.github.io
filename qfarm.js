@@ -42,7 +42,7 @@ function doAttack() {
   var num_attacks = farm_list.length - i;
   if (num_attacks > scouts) num_attacks = scouts;
   var lcs = total_lcs / num_attacks;
-  if (lcs < minLcs) lcs = minLcs;
+  if (lcs < min_lcs) lcs = min_lcs;
   lcs = parseInt(lcs);
 
   document.forms[0].spy.value = 1;
