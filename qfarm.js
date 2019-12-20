@@ -23,7 +23,7 @@ function getCookie(key) {
 }
 
 function setCookie(key, value, hours) {
-  var exp = now.getTime() + hours * 60 * 60 * 1000;
+  var exp = Date.now() + hours * 60 * 60 * 1000;
   document.cookie = key + "=" + value + ";expires=" + exp;
 }
 
@@ -35,17 +35,20 @@ function doAttack() {
   }
   var scouts = $(":input[name=spy]")[0].getAttribute("data-all-count");
   var i = getCookie("qfarm_index");
-  if (i == null || i == farm_list.length) = i = 0;
+  if (i == null) i = 0; 
+  i = parseInt(i);
+  if (i >= farm_list.length) i = 0;
 
   var num_attacks = farm_list.length - i;
-  if (num_attacks > num_scouts) num_attacks = num_scouts;
+  if (num_attacks > scouts) num_attacks = scouts;
   var lcs = total_lcs / num_attacks;
   if (lcs < minLcs) lcs = minLcs;
+  lcs = parseInt(lcs);
 
   document.forms[0].spy.value = 1;
   document.forms[0].light.value = lcs;
   document.forms[0].input.value = farm_list[i];
-  setCookie("qfarm_index", i, 1);
+  setCookie("qfarm_index", i + 1, 1);
 }
 
 if (screen == "place") {
