@@ -48,7 +48,9 @@ function doAttack() {
   document.forms[0].spy.value = 1;
   document.forms[0].light.value = lcs;
   document.forms[0].input.value = farm_list[i];
-  setCookie("qfarm_index", i + 1, 1);
+  i++;
+  if (i == farm_list.length) i = 0;
+  setCookie("qfarm_index", i, 1);
 }
 
 if (screen == "place") {
