@@ -3,7 +3,7 @@ javascript:
 var world_url = "https://" + window.location.href.match(/en\d+.tribalwars.net/)[0];
 var screen = window.location.href.match(/screen=([a-z_]+)/)[1];
 
-var wall_rams = [2,4,5,10,14,19];
+var wall_rams = [0,2,4,5,10,14,19];
 
 function attack_village() {
   var defender_raw_village = document.getElementById('attack_info_def').rows[1].cells[1].firstChild.firstChild;
