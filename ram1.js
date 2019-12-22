@@ -1,6 +1,6 @@
 javascript:
 
-var world_url = "https://en110.tribalwars.net";
+var world_url = "https://" + window.location.href.match(/en\d+.tribalwars.net/)[0];
 var screen = window.location.href.match(/screen=([a-z_]+)/)[1];
 
 var wall_rams = [2,4,5,10,14,19];
