@@ -3,6 +3,7 @@ javascript:
 var max_range = 15;
 var world_url = "https://" + window.location.href.match(/en\d+.tribalwars.net/)[0];
 var screen = window.location.href.match(/screen=([a-z_]+)/)[1];
+var village_xy = $("#menu_row2_village")[0].parentElement.innerText.match(/\d+\|\d+/)[0];
 
 var wall_rams = [0,2,4,5,10,14,19];
 
@@ -23,13 +24,19 @@ function fill_units(xy) {
   document.forms[0].axe.value = 50;
 }
 
+function sq_distance(a, b) {
+  var as = a.split("|");
+  var bs = b.split("|");
+  return (as[0] - bs[0])*(as[0] - bs[0]) + (as[1] - bs[1])*(as[1] - bs[1]);
+}
+
 function setup_rams() {
   var village_list = window.top.$("#plunder_list tr:not(:first-child):visible");
   for (i = 1; i < village_list.length; i++) {
     var tds = village_list[i].getElementsByTagName("td");
     var xy = tds[3].innerHTML.split("(")[1].split(")")[0];
     var wall_level = tds[6].innerHTML;
-    if (wall_level > 0) {
+    if (wall_level > 0 && sq_distance(village_xy, xy) <= max_range * max_range) {
       window.location.href = world_url + "/game.php?screen=place&xy=" + xy + "&wall=" + wall_level;
       return;
     }
