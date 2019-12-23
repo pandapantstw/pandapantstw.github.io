@@ -52,8 +52,11 @@ if (screen == "am_farm") {
 } else if (screen == "place") {
   if (!screen_is_try_confirm) {
     var xy = window.location.href.match(/xy=([|\d]+)/);
-    if (xy == undefined) window.location.href = world_url + "/game.php?screen=am_farm";
-    else fill_units(xy[1]);
+    if (xy == undefined) {
+      window.location.href = world_url + "/game.php?screen=am_farm";
+    } else {
+      fill_units(xy[1]);
+    }
   }
 } else {
   console.log("No command for " + screen);
