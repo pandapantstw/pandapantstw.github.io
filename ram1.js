@@ -3,6 +3,7 @@ javascript:
 var max_range = 15;
 var world_url = "https://" + window.location.href.match(/en\d+.tribalwars.net/)[0];
 var screen = window.location.href.match(/screen=([a-z_]+)/)[1];
+var screen_is_try_confirm = window.location.href.includes("try=confirm");
 var village_xy = $("#menu_row2_village")[0].parentElement.innerText.match(/\d+\|\d+/)[0];
 
 var wall_rams = [0,2,4,5,10,14,19];
@@ -47,7 +48,9 @@ function setup_rams() {
 if (screen == "am_farm") {
   setup_rams();
 } else if (screen == "report") {
-  attack_village();
+  if (!screen_is_try_confirm) {
+    attack_village();
+  }
 } else if (screen == "place") {
   var xy = window.location.href.match(/xy=([|\d]+)/);
   if (xy == undefined) window.location.href = world_url + "/game.php?screen=am_farm";
