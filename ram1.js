@@ -48,13 +48,13 @@ function setup_rams() {
 if (screen == "am_farm") {
   setup_rams();
 } else if (screen == "report") {
-  if (!screen_is_try_confirm) {
-    attack_village();
-  }
+  attack_village();
 } else if (screen == "place") {
-  var xy = window.location.href.match(/xy=([|\d]+)/);
-  if (xy == undefined) window.location.href = world_url + "/game.php?screen=am_farm";
-  else fill_units(xy[1]);
+  if (!screen_is_try_confirm) {
+    var xy = window.location.href.match(/xy=([|\d]+)/);
+    if (xy == undefined) window.location.href = world_url + "/game.php?screen=am_farm";
+    else fill_units(xy[1]);
+  }
 } else {
   console.log("No command for " + screen);
 }
