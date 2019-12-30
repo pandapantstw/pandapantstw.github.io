@@ -7,6 +7,8 @@ var screen_is_try_confirm = window.location.href.includes("try=confirm");
 var village_xy = $("#menu_row2_village")[0].parentElement.innerText.match(/\d+\|\d+/)[0];
 
 var wall_rams = [0,2,4,5,10,14,19];
+var wall_rams_small = [0,2,2,2,2,2,6];
+var wall_axe = [0,20,50,50,50,50,50];
 
 function attack_village() {
   var defender_raw_village = document.getElementById('attack_info_def').rows[1].cells[1].firstChild.firstChild;
@@ -22,7 +24,7 @@ function fill_units(xy) {
   document.forms[0].input.value = xy;
   document.forms[0].spy.value = 1;
   document.forms[0].ram.value = wall_rams[wall];
-  document.forms[0].axe.value = 50;
+  document.forms[0].axe.value = wall_axe[wall];
 }
 
 function sq_distance(a, b) {
