@@ -64,10 +64,7 @@ if (screen == "am_farm") {
       window.location.href = world_url + "/game.php?screen=am_farm";
     } else {
       fill_units(xy[1]);
-      document.getElementsByName('attack')[0].click();
     }
-  } else {
-    document.getElementsByName('submit')[0].click();
   }
 } else {
   console.log("No command for " + screen);
