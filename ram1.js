@@ -13,7 +13,14 @@ var wall_axe = [0,20,50,50,50,50,50];
 function attack_village() {
   var def_raw_village = document.getElementById('attack_info_def').rows[1].cells[1].firstChild.firstChild;
   var def_xy = def_raw_village.innerHTML.split("(")[1].split(")")[0];
-  var wall_level = JSON.parse($('#attack_spy_building_data').val())[12].level;
+  var building_levels = JSON.parse($('#attack_spy_building_data').val());
+  var wall_level = 0;
+  for (var i in building_levels) {
+    if (building_levels[i].id == "wall") {
+      wall_level = building_levels[i].level;
+      break;
+    }
+  }
   window.location.href = world_url + "/game.php?screen=place&xy=" + def_xy + "&wall=" + wall_level;
 }
 
@@ -57,8 +64,11 @@ if (screen == "am_farm") {
       window.location.href = world_url + "/game.php?screen=am_farm";
     } else {
       fill_units(xy[1]);
+      document.getElementsByName('attack')[0].click();
     }
+  } else {
+    document.getElementsByName('submit')[0].click();
   }
 } else {
   console.log("No command for " + screen);
-}
+} 
