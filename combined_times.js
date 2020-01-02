@@ -13,7 +13,7 @@ function doStuff() {
     var building = extractStuff(tds[2]);
     var rax = extractStuff(tds[3]);
     var stable = extractStuff(tds[4]);
-    console.log(building + "\t" + rax + "\t" + stable);
+    document.body.innerHTML += building + "</br>" + rax + "</br>" + stable + "</p>";
   }
 }
   
