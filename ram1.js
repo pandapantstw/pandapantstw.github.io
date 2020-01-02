@@ -11,11 +11,10 @@ var wall_rams_small = [0,2,2,2,2,2,6];
 var wall_axe = [0,20,50,50,50,50,50];
 
 function attack_village() {
-  var defender_raw_village = document.getElementById('attack_info_def').rows[1].cells[1].firstChild.firstChild;
-  var defender_village_id = defender_raw_village.href.match(/&id=([0-9]+)/)[1];
-  var attacker_raw_village = document.getElementById('attack_info_att').rows[1].cells[1].firstChild.firstChild;
-  var attacker_village_id = defender_raw_village.href.match(/&id=([0-9]+)/)[1];
-  window.location.href = world_url + "/game.php?village=" + attacker_village_id + "&screen=place&target=" + defender_village_id;
+  var def_raw_village = document.getElementById('attack_info_def').rows[1].cells[1].firstChild.firstChild;
+  var def_xy = def_raw_village.innerHTML.split("(")[1].split(")")[0];
+  var wall_level = JSON.parse($('#attack_spy_building_data').val())[12].level;
+  window.location.href = world_url + "/game.php?screen=place&xy=" + def_xy + "&wall=" + wall_level;
 }
 
 function fill_units(xy) {
