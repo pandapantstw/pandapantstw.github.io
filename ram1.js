@@ -6,7 +6,7 @@ var screen = window.location.href.match(/screen=([a-z_]+)/)[1];
 var screen_is_try_confirm = window.location.href.includes("try=confirm");
 var village_xy = $("#menu_row2_village")[0].parentElement.innerText.match(/\d+\|\d+/)[0];
 
-var wall_rams = [0,2,4,5,10,14,19];
+var wall_rams = [0,2,4,7,10,14,19];
 var wall_rams_small = [0,2,2,2,2,2,6];
 var wall_axe = [0,20,50,50,50,50,50];
 
