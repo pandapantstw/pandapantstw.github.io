@@ -15,8 +15,6 @@ var now_date_matched = now_date_raw.match(/(\d+)\/(\d+)\/(\d+)/);
 var now = new Date(now_date_matched[2] + "/" + now_date_matched[1] + "/" + now_date_matched[3] + " " + now_time);
 var tomorrow = new Date(now); 
 tomorrow.setDate(tomorrow.getDate() + 1);
-console.log(now);
-console.log(tomorrow);
 
 function parseDateTimeFromTd(content) {
   var raw = content.getElementsByTagName("img")[0].title.split(" - ")[0];
