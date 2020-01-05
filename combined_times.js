@@ -1,7 +1,7 @@
 javascript:
 
 var world_url = "https://en110.tribalwars.net";
-var screen = window.location.href.match(/screen=([a-z]+)/)[1];
+var screen = window.location.href.match(/screen=([a-z_]+)/)[1];
 var mode = window.location.href.match(/mode=([a-z_]+)/);
 if (mode != null) mode = mode[1];
 
@@ -68,5 +68,7 @@ function printSlowVillages() {
 if (screen == "overview_villages" && mode == "combined") {
   printSlowVillages();
 } else {
-  goto("screen=overview_villages&mode=combined&group=0");
+  console.log(screen);
+  console.log(mode);
+//  goto("screen=overview_villages&mode=combined&group=0");
 }
