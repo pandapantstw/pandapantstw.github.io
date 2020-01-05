@@ -68,7 +68,5 @@ function printSlowVillages() {
 if (screen == "overview_villages" && mode == "combined") {
   printSlowVillages();
 } else {
-  console.log(screen);
-  console.log(mode);
-//  goto("screen=overview_villages&mode=combined&group=0");
+  goto("screen=overview_villages&mode=combined&group=0");
 }
