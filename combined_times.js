@@ -57,9 +57,9 @@ function printSlowVillages() {
   
   for (i = 0; i < village_list.length; i++) {
     var tds = village_list[i].getElementsByTagName("td");
-    var building = extractStuff(tds[2]);
-    var rax = extractStuff(tds[3]);
-    var stable = extractStuff(tds[4]);
+    var building = parseDateTimeFromTd(tds[2]);
+    var rax = parseDateTimeFromTd(tds[3]);
+    var stable = parseDateTimeFromTd(tds[4]);
     if (building < tomorrow || rax < tomorrow || stable < tomorrow) 
       document.body.innerHTML += tds[1].innerText.trim() + "</br>" + building + "</br>" + rax + "</br>" + stable + "</p>";
   }
