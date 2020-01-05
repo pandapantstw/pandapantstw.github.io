@@ -53,7 +53,11 @@ function parseDateTimeFromTd(content) {
 }
 
 function getHoursBetween(date1, date2) {
-  return parseInt(Math.abs(date1 - date2) / (60 * 60 * 1000));
+  var result = parseInt(Math.abs(date1 - date2) / (60 * 60 * 1000));
+  if (result < 10) {
+    result = "0" + result;
+  }
+  return result + "h";
 }
 
 function printSlowVillages() {
@@ -64,11 +68,12 @@ function printSlowVillages() {
     var building = parseDateTimeFromTd(tds[2]);
     var rax = parseDateTimeFromTd(tds[3]);
     var stable = parseDateTimeFromTd(tds[4]);
-    if (building < tomorrow || rax < tomorrow || stable < tomorrow) 
-      document.body.innerHTML += getHoursBetween(now, building) + "h ";
-      document.body.innerHTML += getHoursBetween(now, rax) + "h ";
-      document.body.innerHTML += getHoursBetween(now, stable) + "h ";
+    if (building < tomorrow || rax < tomorrow || stable < tomorrow) {
+      document.body.innerHTML += getHoursBetween(now, building) + " ";
+      document.body.innerHTML += getHoursBetween(now, rax) + " ";
+      document.body.innerHTML += getHoursBetween(now, stable) + " ";
       document.body.innerHTML += tds[1].innerText.trim() + "</br>";
+    }
   }
 }
 
