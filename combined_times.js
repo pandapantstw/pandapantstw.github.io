@@ -52,6 +52,10 @@ function parseDateTimeFromTd(content) {
   return result;
 }
 
+function getHoursBetween(date1, date2) {
+  return parseInt(Math.abs(date1 - date2) / (60 * 60 * 1000));
+}
+
 function printSlowVillages() {
   var village_list = $("#combined_table tr:not(:first-child)");
   
@@ -61,7 +65,10 @@ function printSlowVillages() {
     var rax = parseDateTimeFromTd(tds[3]);
     var stable = parseDateTimeFromTd(tds[4]);
     if (building < tomorrow || rax < tomorrow || stable < tomorrow) 
-      document.body.innerHTML += tds[1].innerText.trim() + "</br>" + building + "</br>" + rax + "</br>" + stable + "</p>";
+      document.body.innerHTML += getHoursBetween(now, building) + "h ";
+      document.body.innerHTML += getHoursBetween(now, rax) + "h ";
+      document.body.innerHTML += getHoursBetween(now, stable) + "h ";
+      document.body.innerHTML += tds[1].innerText.trim() + "</br>";
   }
 }
 
