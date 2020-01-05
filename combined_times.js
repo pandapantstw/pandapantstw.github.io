@@ -1,5 +1,14 @@
 javascript:
 
+var world_url = "https://en110.tribalwars.net";
+var screen = window.location.href.match(/screen=([a-z]+)/)[1];
+var mode = window.location.href.match(/mode=([a-z_]+)/);
+if (mode != null) mode = mode[1];
+
+function goto(params) {
+  window.location.href = world_url + "/game.php?" + params;
+}
+
 var now_time = $("#serverTime")[0].innerText;
 var now_date_raw = $("#serverDate")[0].innerText;
 var now_date_matched = now_date_raw.match(/(\d+)\/(\d+)\/(\d+)/);
@@ -9,7 +18,7 @@ tomorrow.setDate(tomorrow.getDate() + 1);
 console.log(now);
 console.log(tomorrow);
 
-function extractStuff(content) {
+function parseDateTimeFromTd(content) {
   var raw = content.getElementsByTagName("img")[0].title.split(" - ")[0];
   raw = raw.replace("on ", "");
   var day = 0;
@@ -43,7 +52,7 @@ function extractStuff(content) {
   return result;
 }
 
-function doStuff() {
+function printSlowVillages() {
   var village_list = $("#combined_table tr:not(:first-child)");
   
   for (i = 0; i < village_list.length; i++) {
@@ -56,4 +65,8 @@ function doStuff() {
   }
 }
 
-doStuff();
+if (screen == "overview_villages" && mode == "combined") {
+  printSlowVillages();
+} else {
+  goto("screen=overview_villages&mode=combined&group=0");
+}
