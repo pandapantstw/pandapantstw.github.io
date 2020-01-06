@@ -1,5 +1,7 @@
 javascript:
 
+var filter_hours = 12;
+
 var world_url = "https://en110.tribalwars.net";
 var screen = window.location.href.match(/screen=([a-z_]+)/)[1];
 var mode = window.location.href.match(/mode=([a-z_]+)/);
@@ -15,6 +17,8 @@ var now_date_matched = now_date_raw.match(/(\d+)\/(\d+)\/(\d+)/);
 var now = new Date(now_date_matched[2] + "/" + now_date_matched[1] + "/" + now_date_matched[3] + " " + now_time);
 var tomorrow = new Date(now); 
 tomorrow.setDate(tomorrow.getDate() + 1);
+var filter_limit = new Date(now);
+filter_limit.setHours(filter_limit.getHours() + filter_hours);
 
 function parseDateTimeFromTd(content) {
   var raw = content.getElementsByTagName("img")[0].title.split(" - ")[0];
@@ -66,7 +70,7 @@ function printSlowVillages() {
     var building = parseDateTimeFromTd(tds[2]);
     var rax = parseDateTimeFromTd(tds[3]);
     var stable = parseDateTimeFromTd(tds[4]);
-    if (building < tomorrow || rax < tomorrow || stable < tomorrow) {
+    if (building < filter_limit || rax < filter_limit || stable < filter_limit) {
       document.body.innerHTML += getHoursBetween(now, building) + " ";
       document.body.innerHTML += getHoursBetween(now, rax) + " ";
       document.body.innerHTML += getHoursBetween(now, stable) + " ";
