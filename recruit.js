@@ -1,5 +1,14 @@
 javascript:
 
+var world_url = "https://en110.tribalwars.net";
+var screen = window.location.href.match(/screen=([a-z_]+)/)[1];
+var mode = window.location.href.match(/mode=([a-z_]+)/);
+if (mode != null) mode = mode[1];
+
+function goto(params) {
+  window.location.href = world_url + "/game.php?" + params;
+}
+
 var spear_index = 0;
 var axe_index = 2;
 var scout_index = 4;
@@ -42,10 +51,9 @@ function vector_mul(a, b) {
   return result;
 }
 
-function doStuff() {
+function recruit() {
   var rows = $("#mass_train_table tr");
   
-//  for(var i = 1; i < 2; i++) {
   for(var i = 1; i < rows.length; i++) {
     var tds = rows[i].getElementsByTagName("td");
     var resources = tds[1].innerText.replace(/\./g, "").split("\n");
@@ -85,6 +93,7 @@ function doStuff() {
       if (target[j] + built[j] > limit[j]) target[j] = limit[j] - built[j];
       if (target[j] < 0) target[j] = 0;
       var resource_cost = vector_add(resource_cost, vector_mul(unit_cost[j], target[j]));
+      target[j] = parseInt(target[j]);
     }
     if (!should_build) continue;
     console.log("Want to fill " + i + " with [" + target + "]");
@@ -102,4 +111,9 @@ function doStuff() {
     }
   }
 }
-doStuff();
+
+if (screen == "train" && mode == "mass") {
+  recruit();
+} else {
+  goto("screen=train&mode=mass");
+}
