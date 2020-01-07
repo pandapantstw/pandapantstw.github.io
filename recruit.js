@@ -109,7 +109,6 @@ function recruit() {
     }
     if (ratio < 0.1) continue;
     console.log("Filling " + i + " with [" + target + "] at ratio " + ratio);
-    console.log(farm);
     for (var j = 0 ; j < target.length; j++) {
       tds[3 + j].getElementsByTagName("input")[0].value = parseInt(ratio * target[j]);
     }
