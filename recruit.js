@@ -4,7 +4,7 @@ var spear_index = 0;
 var axe_index = 2;
 var scout_index = 4;
 
-var hours = 5
+var hours = 12;
 var refill_factor = 2;
 var off_per_hour = [0,0,20,0,0,10,0,0,1,0,0];
 var off_limit = [0,0,6000,0,0,3000,0,0,240,0,0];
@@ -65,15 +65,20 @@ function doStuff() {
       if (target[j] < 0) target[j] = 0;
       var resource_cost = vector_add(resource_cost, vector_mul(unit_cost[j], target[j]));
     }
+    console.log(resource_cost);
+    console.log(resources);
     if (!should_build) continue;
     console.log("Want to fill " + i + " with [" + target + "]");
-    for (var j = 0; j < resource_cost; j++) 
-      if (resources[j] < resource_cost[j]) 
+    var ratio = 1;
+    for (var j = 0; j < resource_cost.length; j++) {
+      if (resources[j] < ratio * resource_cost[j]) {
+        ratio = resources[j] / resource_cost[j];
         should_build = false;
-    if (!should_build) continue;
-    console.log("Filling " + i + " with [" + target + "]");
+      }
+    }
+    console.log("Filling " + i + " with [" + target + "] at ratio " + ratio);
     for (var j = 0 ; j < target.length; j++) {
-      tds[3 + j].getElementsByTagName("input")[0].value = target[j];
+      tds[3 + j].getElementsByTagName("input")[0].value = parseInt(ratio * target[j]);
     }
   }
 }
