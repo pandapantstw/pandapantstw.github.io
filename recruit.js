@@ -26,18 +26,18 @@ var scout_per_hour = [14,7.5,0,0,14,0,0,1.4,0,0,0];
 var scout_limit = [5000,2600,0,0,5000,0,0,500,0,0,0];
 
 var unit_cost = [
-  [50,30,10],
-  [30,30,70],
-  [60,30,40],
-  [100,30,60],
-  [50,50,20],
-  [125,100,250],
-  [250,100,150],
-  [200,150,600],
-  [300,200,200],
-  [320,400,100],
-  [20,20,40],
-  [40000,50000,50000],
+  [50,30,10,1],
+  [30,30,70,1],
+  [60,30,40,1],
+  [100,30,60,1],
+  [50,50,20,2],
+  [125,100,250,4],
+  [250,100,150,5],
+  [200,150,600,6],
+  [300,200,200,5],
+  [320,400,100,8],
+  [20,20,40,10],
+  [40000,50000,50000,100],
 ];
 
 function vector_add(a, b) {
@@ -59,6 +59,9 @@ function recruit() {
     var resources = tds[1].innerText.replace(/\./g, "").split("\n");
     for (var j = 0 ; j < resources.length; j++) resources[j] = parseInt(resources[j]);
     var farm = tds[2].innerText.split("/");
+    var available_farm = parseInt(farm[1]) - parseInt(farm[0]);
+    if (available_farm < 0) available_farm = 0;
+    resources = resources.concat(available_farm);
     var built = [];
     var building = [];
     for (var j = 3; j < tds.length; j++) {
@@ -81,7 +84,7 @@ function recruit() {
       continue;
     }
     
-    var resource_cost = [0,0,0];
+    var resource_cost = [0,0,0,0];
     var should_build = false;
     // Loop around the list of units to calculate production targets and costs
     for (var j = 0 ; j < target.length; j++) {
@@ -106,6 +109,7 @@ function recruit() {
     }
     if (ratio < 0.1) continue;
     console.log("Filling " + i + " with [" + target + "] at ratio " + ratio);
+    console.log(farm);
     for (var j = 0 ; j < target.length; j++) {
       tds[3 + j].getElementsByTagName("input")[0].value = parseInt(ratio * target[j]);
     }
