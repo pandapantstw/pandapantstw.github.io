@@ -1,5 +1,7 @@
 javascript:
 
+if (hours == undefined) hours = 12;
+
 var world_url = "https://en110.tribalwars.net";
 var screen = window.location.href.match(/screen=([a-z_]+)/)[1];
 var mode = window.location.href.match(/mode=([a-z_]+)/);
@@ -13,7 +15,6 @@ var spear_index = 0;
 var axe_index = 2;
 var scout_index = 4;
 
-var hours = 12;
 var refill_factor = 2;
 
 var off_per_hour = [0,0,20,0,0,10,0,0,1,0,0];
