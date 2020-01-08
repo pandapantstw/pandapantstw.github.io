@@ -14,7 +14,7 @@ function goto(params) {
 
 if (screen == "market" && mode == "mass_create_offers") {
   $("#offer_fill_button")[0].click();
-  $(".btn_offer_create")[0].click();
+//  $(".btn_offer_create")[0].click();
 } else {
   goto("screen=market&mode=mass_create_offers");
 }
