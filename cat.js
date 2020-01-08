@@ -2,7 +2,7 @@ javascript:
 
 var num_axe = 20;
 var building_ids = ['main', 'barracks', 'stable', 'garage', 'church', 'church_f', 'snob', 'smith', 'place', 'statue', 'market', 'wood', 'stone', 'iron', 'farm', 'storage', 'hide', 'wall'];
-var building_cats = [2,2,2,3,3,3,3,3,4,4,4,5,5,6,6,6,7,8,8,9];
+var building_cats = [2,2,2,3,3,3,3,3,4,4,4,5,5,6,6,6,7,8,8,9,10,10,11,12,13,15,16,17,19,20];
 var building_min = [1,0,0,0,0,0,0,0,1,0,0,30,30,30,1,30,10,0];
 
 function getCookie(key) {
