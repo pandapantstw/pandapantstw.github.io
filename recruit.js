@@ -1,6 +1,6 @@
 javascript:
 
-if (hours == undefined) hours = 12;
+if (typeof hours === 'undefined') hours = 12;
 
 var world_url = "https://en110.tribalwars.net";
 var screen = window.location.href.match(/screen=([a-z_]+)/)[1];
