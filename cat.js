@@ -17,7 +17,7 @@ function setCookie(key, value) {
   document.cookie = key + "=" + value + ";expires=-1";
 }
 
-var world_url = "https://en110.tribalwars.net";
+var world_url = "https://" + window.location.href.match(/en\d+.tribalwars.net/)[0];
 var screen = window.location.href.match(/screen=([a-z]+)/)[1];
 var screen_is_try_confirm = window.location.href.includes("try=confirm");
 
