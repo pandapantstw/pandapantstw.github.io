@@ -1,7 +1,7 @@
 javascript:
 
 var max_range = 15;
-var world_url = "https://" + window.location.href.match(/en\d+.tribalwars.net/)[0];
+var world_url = "https://" + window.location.href.match(/[a-z]+\d+.tribalwars.net/)[0];
 var screen = window.location.href.match(/screen=([a-z_]+)/)[1];
 var screen_is_try_confirm = window.location.href.includes("try=confirm");
 var village_xy = $("#menu_row2_village")[0].parentElement.innerText.match(/\d+\|\d+/)[0];
