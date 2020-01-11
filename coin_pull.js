@@ -13,7 +13,7 @@ function goto(params) {
   window.location.href = world_url + "/game.php?" + params;
 }
 
-function pull() {
+function marketPull() {
   var local = [
       parseInt($("#wood")[0].innerText),
       parseInt($("#stone")[0].innerText),
