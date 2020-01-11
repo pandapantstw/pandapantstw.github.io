@@ -26,6 +26,7 @@ function doStuff() {
   var reached_cap = true;
   for (var i = 0; i < target.length; i++) {
     if (target[i] < 0) target[i] = 0;
+    if (!checkbox[i].checked) checkbox[i].click();
     if (target[i] > 0) {
       checkbox[i].click();
       reached_cap = false;
