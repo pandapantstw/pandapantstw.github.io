@@ -26,9 +26,10 @@ function doStuff() {
   var reached_cap = true;
   for (var i = 0; i < target.length; i++) {
     if (target[i] < 0) target[i] = 0;
-    var needs_filling = target[i] > 0;
-    checkbox[i].checked = needs_filling;
-    if (needs_filling) reached_cap = false;
+    if (target[i] > 0) {
+      checkbox[i].click();
+      reached_cap = false;
+    }
   }
   if (reached_cap) return;
   var select_all_checkbox = $('input[name$="select-all"]')[0];
