@@ -1,6 +1,7 @@
 javascript:
 
 var warehouse_ratio = 0.8;
+var reserve = 1000;
 
 function doStuff() {
   var local = [
@@ -51,13 +52,15 @@ function doStuff() {
         parseInt(input[1].value),
         parseInt(input[2].value)];
     for (var j = 0; j < target.length; j++) {
+      if (local_target[j] < reserve) local_target[j] = 0;
       if (local_target[j] > target[j]) {
         local_target[j] = target[j];
         zero_remaining = true;
       }
       target[j] -= local_target[j];
-      input.value = local_target[j];
+      input[j].value = local_target[j];
     }
+    console.log(local_target);
     console.log(target);
   }
 }
