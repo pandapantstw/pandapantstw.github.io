@@ -25,6 +25,7 @@ function doStuff() {
       $("#checkbox_iron")[0]];
   var reached_cap = true;
   for (var i = 0; i < target.length; i++) {
+    if (target[i] < 0) target[i] = 0;
     var needs_filling = target[i] > 0;
     checkbox[i].checked = needs_filling;
     if (needs_filling) reached_cap = false;
@@ -55,7 +56,7 @@ function doStuff() {
       if (local_target[j] < reserve) local_target[j] = 0;
       if (local_target[j] > target[j]) {
         local_target[j] = target[j];
-        zero_remaining = true;
+        if (target[j] > 0) zero_remaining = true;
       }
       target[j] -= local_target[j];
       input[j].value = local_target[j];
