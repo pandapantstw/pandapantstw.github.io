@@ -9,6 +9,10 @@ var village_xy = $("#menu_row2_village")[0].parentElement.innerText.match(/\d+\|
 var wall_rams = [0,2,4,7,10,15,20,25,31,38,46];
 var wall_axe = [0,20,50,50,50,50,50,100,100,100,200];
 
+function next_village() {
+  window.location.href = $("#village_switch_right")[0].href;
+}
+
 function attack_village() {
   var def_raw_village = document.getElementById('attack_info_def').rows[1].cells[1].firstChild.firstChild;
   var def_xy = def_raw_village.innerHTML.split("(")[1].split(")")[0];
@@ -49,7 +53,7 @@ function setup_rams() {
       return;
     }
   }
-  console.log("Done ramming");
+  next_village();
 }
 
 if (screen == "am_farm") {
