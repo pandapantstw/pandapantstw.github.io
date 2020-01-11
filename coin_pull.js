@@ -3,7 +3,17 @@ javascript:
 var warehouse_ratio = 0.8;
 var reserve = 1000;
 
-function doStuff() {
+var world_url = "https://" + window.location.href.match(/[a-z]+\d+.tribalwars.net/)[0];
+var screen = window.location.href.match(/screen=([a-z_]+)/)[1];
+var screen_is_try_confirm = window.location.href.includes("try=confirm");
+var mode = window.location.href.match(/mode=([a-z_]+)/);
+if (mode != null) mode = mode[1];
+
+function goto(params) {
+  window.location.href = world_url + "/game.php?" + params;
+}
+
+function pull() {
   var local = [
       parseInt($("#wood")[0].innerText),
       parseInt($("#stone")[0].innerText),
@@ -68,4 +78,8 @@ function doStuff() {
   }
 }
 
-doStuff();
+if (screen == "market" && mode == "call") {
+  marketPull();
+} else {
+  goto("screen=market&mode=call");
+}
