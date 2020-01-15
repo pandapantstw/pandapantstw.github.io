@@ -71,17 +71,35 @@ function printSlowVillages() {
   var village_list = $("#combined_table tr:not(:first-child)");
   
   for (i = 0; i < village_list.length; i++) {
+    console.log(i);
     var tds = village_list[i].getElementsByTagName("td");
     var building = manipulateDot(tds[2]);
     var rax = manipulateDot(tds[3]);
     var stable = manipulateDot(tds[4]);
-    if (building && rax && stable) village_list[i].remove();
     var farm_match = tds[7].innerText.match(/(\d+) \((\d+)\)/);
     var farm_available = parseInt(farm_match[1]);
     var farm_level = parseInt(farm_match[2]);
-    var farm_building = tds[2].getElementsByTagName("img")[0].title.split(" - ")[1].includes("Farm");
-    if (farm_level == 30 && farm_available > 500) village_list[i].remove();
-    if (farm_available < 10 && farm_level) village_list[i].remove();
+    var buildings = tds[2].getElementsByTagName("img")[0].title.split(" - ")[1]
+    var farm_building = buildings.includes("Farm");
+    var num_buildings = buildings.match(/,/g);
+    if (num_buildings == null) num_buildings = 0;
+    else num_buildings = num_buildings.length + 1;
+    
+    if (rax && stable) {
+      if (building || num_buildings == 5) {
+        village_list[i].remove();
+        continue;
+      }
+    }
+    if (farm_level == 30 && farm_available > 500) {
+      village_list[i].remove();
+      continue;
+    }
+    if (farm_available < 10 && farm_level)  {
+      village_list[i].remove();
+      continue;
+    }
+    console.log(num_buildings);
   }
 }
 
