@@ -85,21 +85,26 @@ function printSlowVillages() {
     if (num_buildings == null) num_buildings = 0;
     else num_buildings = num_buildings.length + 1;
     
+    // If troop queues are full
     if (rax && stable) {
-      if (building || num_buildings == 5) {
+      // and buildings queues are full
+      if (building || num_buildings == 5) { 
+        // then skip this village
         village_list[i].remove();
         continue;
       }
     }
-    if (farm_level == 30 && farm_available > 500) {
-      village_list[i].remove();
-      continue;
+    // If we're low on farm space
+    if (farm_available < 500)  {
+      // but we're either building a farm or have a max farm
+      if (farm_building || farm_level == 30) {
+        // then skip this village
+        village_list[i].remove();
+        continue;
+      }
     }
-    if (farm_available < 10 && farm_level)  {
-      village_list[i].remove();
-      continue;
-    }
-    console.log(num_buildings);
+    // At this point, we can build troops or buildings and we have farm space
+    // Or we're low on farm space, and we aren't building a farm
   }
 }
 
