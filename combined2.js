@@ -2,7 +2,7 @@ javascript:
 
 var filter_hours = 12;
 
-var world_url = "https://en110.tribalwars.net";
+var world_url = "https://" + window.location.href.match(/[a-z]+\d+.tribalwars.net/)[0];
 var screen = window.location.href.match(/screen=([a-z_]+)/)[1];
 var mode = window.location.href.match(/mode=([a-z_]+)/);
 if (mode != null) mode = mode[1];
@@ -20,28 +20,29 @@ tomorrow.setDate(tomorrow.getDate() + 1);
 var filter_limit = new Date(now);
 filter_limit.setHours(filter_limit.getHours() + filter_hours);
 
-function parseDateTimeFromTd(content) {
-  var raw = content.getElementsByTagName("img")[0].title.split(" - ")[0];
-  raw = raw.replace("on ", "");
+function manipulateDot(content) {
+  var img = content.getElementsByTagName("img")[0];
+  var raw_time = img.title.split(" - ")[0];
+  raw_time = raw_time.replace("on ", "");
   var day = 0;
   var month = 0;
-  if (raw.includes("No recruitment")) {
+  if (raw_time.includes("No recruitment")) {
       return now;
-  } else if (raw.includes("No production")) {
+  } else if (raw_time.includes("No production")) {
       return now;
-  } else if (raw.includes("today")) {
+  } else if (raw_time.includes("today")) {
     day = now.getDate();
     month = now.getMonth();
-  } else if (raw.includes("tomorrow")) {
+  } else if (raw_time.includes("tomorrow")) {
     day = tomorrow.getDate();
     month = tomorrow.getMonth();
   } else {
-    var daymonth = raw.match(/(\d+)\.(\d+)\./);
+    var daymonth = raw_time.match(/(\d+)\.(\d+)\./);
     day = parseInt(daymonth[1]);
     month = parseInt(daymonth[2]) - 1;
   }
   
-  var hourminute = raw.match(/(\d+):(\d+)/);
+  var hourminute = raw_time.match(/(\d+):(\d+)/);
   var hour = hourminute[1];
   var minute = hourminute[2];
   
@@ -51,7 +52,11 @@ function parseDateTimeFromTd(content) {
   result.setHours(hour);
   result.setMinutes(minute);
   
-  return result;
+  if (result > filter_limit) {
+    img.src = img.src.replace("prod_running", "prod_finish");
+    return true;
+  }
+  return false;
 }
 
 function getHoursBetween(date1, date2) {
@@ -67,15 +72,16 @@ function printSlowVillages() {
   
   for (i = 0; i < village_list.length; i++) {
     var tds = village_list[i].getElementsByTagName("td");
-    var building = parseDateTimeFromTd(tds[2]);
-    var rax = parseDateTimeFromTd(tds[3]);
-    var stable = parseDateTimeFromTd(tds[4]);
-    if (building < filter_limit || rax < filter_limit || stable < filter_limit) {
-      document.body.innerHTML += getHoursBetween(now, building) + " ";
-      document.body.innerHTML += getHoursBetween(now, rax) + " ";
-      document.body.innerHTML += getHoursBetween(now, stable) + " ";
-      document.body.innerHTML += tds[1].innerText.trim() + "</br>";
-    }
+    var building = manipulateDot(tds[2]);
+    var rax = manipulateDot(tds[3]);
+    var stable = manipulateDot(tds[4]);
+    if (building && rax && stable) village_list[i].remove();
+    var farm_match = tds[7].innerText.match(/(\d+) \((\d+)\)/);
+    var farm_available = parseInt(farm_match[1]);
+    var farm_level = parseInt(farm_match[2]);
+    var farm_building = tds[2].getElementsByTagName("img")[0].title.split(" - ")[1].includes("Farm");
+    if (farm_level == 30 && farm_available > 500) village_list[i].remove();
+    if (farm_available < 10 && farm_level) village_list[i].remove();
   }
 }
 
