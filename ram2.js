@@ -4,7 +4,8 @@ if (typeof group_id === 'undefined') group_id = -1;
 
 var max_range = 15;
 var world_url = "https://" + window.location.href.match(/[a-z]+\d+.tribalwars.net/)[0];
-var screen = window.location.href.match(/screen=([a-z_]+)/)[1];
+var screen = window.location.href.match(/screen=([a-z_]+)/);
+if (screen != null) screen = screen[1];
 var screen_is_try_confirm = window.location.href.includes("try=confirm");
 var mode = window.location.href.match(/mode=([a-z_]+)/);
 if (mode != null) mode = mode[1];
@@ -81,6 +82,7 @@ function setup_rams() {
 function parseOverview() {
   var cookie = "";
   var village_list = $("#combined_table tr:not(:first-child)");
+  if (village_list.length == 0) return;
   for (i = 0; i < village_list.length; i++) {
     var tds = village_list[i].getElementsByTagName("td");
     var troops = Array.from(tds).slice(8,tds.length-2).map(function (o) { return parseInt(o.innerText);});
@@ -90,20 +92,78 @@ function parseOverview() {
     var cookie = cookie + coords + "|" + village_id + "|" + rams + ",";
   }
   cookie = cookie.substring(0, cookie.length - 1);
-  console.log(cookie);
+  setCookie("ram2_src", cookie, 1);
+}
+function parseWalls() {
+  var cookie = "";
+  var village_list = window.top.$("#plunder_list tr:not(:first-child):visible");
+  if (village_list.length == 0) return;
+  for (i = 1; i < village_list.length; i++) {
+    var tds = village_list[i].getElementsByTagName("td");
+    var coords = tds[3].innerText.match(/\((\d+\|\d+)\)/)[1];
+    var wall = parseInt(tds[6].innerText);
+    if (wall > 0) cookie = cookie + coords + "|" + wall + ",";
+  }
+  cookie = cookie.substring(0, cookie.length - 1);
+  setCookie("ram2_dst", cookie, 1);
+}
+function attackNext() {
+  var cookie = getCookie("ram2_dst");
+  var target_list = cookie.split(",");
+  if (target_list.length == 0) {
+    console.log("no targets");
+    return;
+  }
+  target = target_list[0].split("|");
+  var wall = parseInt(target[2]);
+  var target_xy = target[0] + "|" + target[1];
+  
+  cookie = getCookie("ram2_src");
+  var srcs = cookie.split(",");
+  if (srcs.length == 0) {
+    console.log("no sources");
+    return;
+  }
+  var chosen_src_id = 0;
+  var chosen_distance_sq = max_range*max_range + 1;
+  for(var i = 0; i < srcs.length; i++) {
+    var src = srcs[i].split("|");
+    var src_xy = src[0] + "|" + src[1];
+    var src_id = src[2];
+    var src_rams = parseInt(src[3]);
+    var src_distance_sq = sq_distance(src_xy, target_xy);
+    if (wall_rams[wall] > src_rams) continue;
+    if (src_distance_sq > chosen_distance_sq) continue;
+    chosen_src_id = src_id;
+    chosen_distance_sq = src_distance_sq;
+  }
+  if (chosen_src_id == 0) {
+    console.log("No one with enough rams");
+    return;
+  }
+  target_list = target_list.slice(1, target_list.length);
+  setCookie("ram2_dst", target_list.join(), 1);
+  if (chosen_distance_sq > max_range * max_range) {
+    attackNext();
+    return;
+  }
+  
+  goto("screen=place&village=" + chosen_src_id + "&xy=" + target_xy + "&wall=" + wall);
 }
 
 if (screen == "overview_villages" && mode == "combined") {
   parseOverview();
+  goto("screen=am_farm");
 } else if (screen == "am_farm") {
-  setup_rams();
+  parseWalls();
+//  attackNext();
 } else if (screen == "report") {
   attack_village();
 } else if (screen == "place") {
   if (!screen_is_try_confirm) {
     var xy = window.location.href.match(/xy=([|\d]+)/);
     if (xy == undefined) {
-      goto("screen=am_farm");
+      attackNext();
     } else {
       fill_units(xy[1]);
     }
