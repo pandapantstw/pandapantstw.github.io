@@ -1,7 +1,7 @@
 javascript:
 
-var warehouse_ratio = 0.8;
-var reserve = 1000;
+if (typeof warehouse_ratio === 'undefined') warehouse_ratio = 0.8;
+if (typeof reserve === 'undefined') reserve = 1000;
 
 var world_url = "https://" + window.location.href.match(/[a-z]+\d+.tribalwars.net/)[0];
 var screen = window.location.href.match(/screen=([a-z_]+)/)[1];
