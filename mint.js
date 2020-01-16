@@ -25,5 +25,5 @@ if (typeof mint_village === 'undefined') {
 } else if (village_id == mint_village && screen == "snob" && mode == "train") {
   mint();
 } else {
-  goto("village=" + village_id + "&screen=snob&mode=train");
+  goto("village=" + mint_village + "&screen=snob&mode=train");
 } 
