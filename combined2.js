@@ -19,17 +19,21 @@ var tomorrow = new Date(now);
 tomorrow.setDate(tomorrow.getDate() + 1);
 var filter_limit = new Date(now);
 filter_limit.setHours(filter_limit.getHours() + filter_hours);
+console.log(filter_limit);
 
 function manipulateDot(content) {
   var img = content.getElementsByTagName("img")[0];
-  var raw_time = img.title.split(" - ")[0];
-  raw_time = raw_time.replace("on ", "");
+  var raw_time = img.title;
+  if (raw_time.includes(" - ")) {
+    raw_time = raw_time.split(" - ")[0];
+    raw_time = raw_time.replace("on ", "");
+  }
   var day = 0;
   var month = 0;
   if (raw_time.includes("No recruitment")) {
-      return now;
+      return false;
   } else if (raw_time.includes("No production")) {
-      return now;
+      return false;
   } else if (raw_time.includes("today")) {
     day = now.getDate();
     month = now.getMonth();
@@ -52,6 +56,7 @@ function manipulateDot(content) {
   result.setHours(hour);
   result.setMinutes(minute);
   
+  console.log(result);
   if (result > filter_limit) {
     img.src = img.src.replace("prod_running", "prod_finish");
     return true;
@@ -71,7 +76,6 @@ function printSlowVillages() {
   var village_list = $("#combined_table tr:not(:first-child)");
   
   for (i = 0; i < village_list.length; i++) {
-    console.log(i);
     var tds = village_list[i].getElementsByTagName("td");
     var building = manipulateDot(tds[2]);
     var rax = manipulateDot(tds[3]);
@@ -91,6 +95,7 @@ function printSlowVillages() {
       if (farm_building || farm_level == 30) {
         // then remove this village
         village_list[i].remove();
+        console.log("Removed " + tds[1].innerText.trim() + " because farm"); 
       }
       // We either need to build a farm or we've skipped this village
       continue;
@@ -102,6 +107,7 @@ function printSlowVillages() {
       if (building || num_buildings == 5) { 
         // then remove this village
         village_list[i].remove();
+        console.log("Removed " + tds[1].innerText.trim() + " because queue"); 
       }
     }
     // At this point, we can build troops or buildings and we have farm space
