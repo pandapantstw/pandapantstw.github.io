@@ -156,7 +156,7 @@ if (screen == "overview_villages" && mode == "combined") {
   goto("screen=am_farm");
 } else if (screen == "am_farm") {
   parseWalls();
-//  attackNext();
+  attackNext();
 } else if (screen == "report") {
   attack_village();
 } else if (screen == "place") {
