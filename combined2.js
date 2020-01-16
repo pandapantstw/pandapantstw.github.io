@@ -19,7 +19,6 @@ var tomorrow = new Date(now);
 tomorrow.setDate(tomorrow.getDate() + 1);
 var filter_limit = new Date(now);
 filter_limit.setHours(filter_limit.getHours() + filter_hours);
-console.log(filter_limit);
 
 function manipulateDot(content) {
   var img = content.getElementsByTagName("img")[0];
@@ -56,7 +55,6 @@ function manipulateDot(content) {
   result.setHours(hour);
   result.setMinutes(minute);
   
-  console.log(result);
   if (result > filter_limit) {
     img.src = img.src.replace("prod_running", "prod_finish");
     return true;
@@ -95,7 +93,6 @@ function printSlowVillages() {
       if (farm_building || farm_level == 30) {
         // then remove this village
         village_list[i].remove();
-        console.log("Removed " + tds[1].innerText.trim() + " because farm"); 
       }
       // We either need to build a farm or we've skipped this village
       continue;
@@ -107,7 +104,6 @@ function printSlowVillages() {
       if (building || num_buildings == 5) { 
         // then remove this village
         village_list[i].remove();
-        console.log("Removed " + tds[1].innerText.trim() + " because queue"); 
       }
     }
     // At this point, we can build troops or buildings and we have farm space
