@@ -43,23 +43,20 @@ function marketPull() {
     }
   }
   if (reached_cap) return;
-  var select_all_checkbox = $('input[name$="select-all"]')[0];
-  if (select_all_checkbox.checked) select_all_checkbox.click();
-  select_all_checkbox.click();
+//  var select_all_checkbox = $('input[name$="select-all"]')[0];
+//  if (select_all_checkbox.checked) select_all_checkbox.click();
+//  select_all_checkbox.click();
   
   var rows = $("tr.supply_location");
-  var zero_remaining = false;
   for (var i = 0; i < rows.length; i++) {
     var tds = rows[i].getElementsByTagName("td");
+    var checkbox = tds[7].getElementsByTagName("input")[0];
+    if (checkbox.checked) checkbox.click();
+    checkbox.click();
     var input = [
         tds[2].getElementsByTagName("input")[0],
         tds[3].getElementsByTagName("input")[0],
         tds[4].getElementsByTagName("input")[0]];
-    if (zero_remaining) {
-     input[0].value = 0;
-     input[1].value = 0;
-     input[2].value = 0;
-    }
     var local_target = [
         parseInt(input[0].value),
         parseInt(input[1].value),
@@ -68,7 +65,7 @@ function marketPull() {
       if (local_target[j] < reserve) local_target[j] = 0;
       if (local_target[j] > target[j]) {
         local_target[j] = target[j];
-        if (target[j] > 0) zero_remaining = true;
+        if (target[j] > 0) return;
       }
       target[j] -= local_target[j];
       input[j].value = local_target[j];
