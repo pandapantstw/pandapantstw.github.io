@@ -1,13 +1,35 @@
 javascript:
 
+if (typeof group_id === 'undefined') group_id = -1;
+
 var max_range = 15;
 var world_url = "https://" + window.location.href.match(/[a-z]+\d+.tribalwars.net/)[0];
 var screen = window.location.href.match(/screen=([a-z_]+)/)[1];
 var screen_is_try_confirm = window.location.href.includes("try=confirm");
+var mode = window.location.href.match(/mode=([a-z_]+)/);
+if (mode != null) mode = mode[1];
 var village_xy = $("#menu_row2_village")[0].parentElement.innerText.match(/\d+\|\d+/)[0];
 
 var wall_rams = [0,2,4,7,10,15,20,25,31,38,46];
 var wall_axe = [0,20,50,50,50,50,50,100,100,100,200];
+
+function getCookie(key) {
+  var raw_list = document.cookie.split("; ");
+  for (i = 0; i < raw_list.length; i++) {
+    var key_value = raw_list[i].split("=");
+    if (key == key_value[0]) return key_value[1];
+  }
+  return null;
+}
+
+function setCookie(key, value, hours) {
+  var exp = Date.now() + hours * 60 * 60 * 1000;
+  document.cookie = key + "=" + value + ";expires=" + exp;
+}
+
+function goto(params) {
+  window.location.href = world_url + "/game.php?" + params;
+}
 
 function next_village() {
   window.location.href = $("#village_switch_right")[0].href;
@@ -24,7 +46,7 @@ function attack_village() {
       break;
     }
   }
-  window.location.href = world_url + "/game.php?screen=place&xy=" + def_xy + "&wall=" + wall_level;
+  goto("screen=place&xy=" + def_xy + "&wall=" + wall_level);
 }
 
 function fill_units(xy) {
@@ -56,7 +78,24 @@ function setup_rams() {
   next_village();
 }
 
-if (screen == "am_farm") {
+function parseOverview() {
+  var cookie = "";
+  var village_list = $("#combined_table tr:not(:first-child)");
+  for (i = 0; i < village_list.length; i++) {
+    var tds = village_list[i].getElementsByTagName("td");
+    var troops = Array.from(tds).slice(8,tds.length-2).map(function (o) { return parseInt(o.innerText);});
+    var rams = troops[8];
+    var coords = tds[1].innerText.match(/\d+\|\d+/)[0];
+    var village_id = tds[1].innerHTML.match(/village=(\d+)/)[1];
+    var cookie = cookie + coords + "|" + village_id + "|" + rams + ",";
+  }
+  cookie = cookie.substring(0, cookie.length - 1);
+  console.log(cookie);
+}
+
+if (screen == "overview_villages" && mode == "combined") {
+  parseOverview();
+} else if (screen == "am_farm") {
   setup_rams();
 } else if (screen == "report") {
   attack_village();
@@ -64,11 +103,13 @@ if (screen == "am_farm") {
   if (!screen_is_try_confirm) {
     var xy = window.location.href.match(/xy=([|\d]+)/);
     if (xy == undefined) {
-      window.location.href = world_url + "/game.php?screen=am_farm";
+      goto("screen=am_farm");
     } else {
       fill_units(xy[1]);
     }
   }
 } else {
-  console.log("No command for " + screen);
+  var group_text = "";
+  if (group_id != -1) group = "&group=" + group_id
+  goto("screen=overview_villages&mode=combined" + group_text);
 } 
