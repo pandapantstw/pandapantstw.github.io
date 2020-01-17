@@ -29,7 +29,7 @@ function setCookie(key, value, hours) {
 }
 
 function goto(params) {
-  window.location.href = world_url + "/game.php?" + params;
+  console.log(window.location.href = world_url + "/game.php?" + params);
 }
 
 function next_village() {
