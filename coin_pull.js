@@ -43,9 +43,6 @@ function marketPull() {
     }
   }
   if (reached_cap) return;
-//  var select_all_checkbox = $('input[name$="select-all"]')[0];
-//  if (select_all_checkbox.checked) select_all_checkbox.click();
-//  select_all_checkbox.click();
   
   var rows = $("tr.supply_location");
   for (var i = 0; i < rows.length; i++) {
@@ -73,6 +70,7 @@ function marketPull() {
     }
     if (finished) return;
   }
+  $("input[value='Request resources']")[0].click();
 }
 
 if (screen == "market" && mode == "call") {
