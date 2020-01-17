@@ -109,6 +109,10 @@ function parseWalls() {
 }
 function attackNext() {
   var cookie = getCookie("ram2_dst");
+  if (cookie == "") {
+    console.log("no targets");
+    return;
+  }
   var target_list = cookie.split(",");
   if (target_list.length == 0) {
     console.log("no targets");
@@ -119,6 +123,10 @@ function attackNext() {
   var target_xy = target[0] + "|" + target[1];
   
   cookie = getCookie("ram2_src");
+  if (cookie == "") {
+    console.log("no sources");
+    return;
+  }
   var srcs = cookie.split(",");
   if (srcs.length == 0) {
     console.log("no sources");
