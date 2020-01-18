@@ -81,7 +81,8 @@ function printSlowVillages() {
     var farm_match = tds[7].innerText.match(/(\d+) \((\d+)\)/);
     var farm_available = parseInt(farm_match[1]);
     var farm_level = parseInt(farm_match[2]);
-    var buildings = tds[2].getElementsByTagName("img")[0].title.split(" - ")[1]
+    var buildings = tds[2].getElementsByTagName("img")[0].title;
+    if (buildings.includes(" - ")) buildings = buildings.split(" - ")[1];
     var farm_building = buildings.includes("Farm");
     var num_buildings = buildings.match(/,/g);
     if (num_buildings == null) num_buildings = 0;
