@@ -94,7 +94,10 @@ function printSlowVillages() {
       if (farm_building || farm_level == 30) {
         // then remove this village
         village_list[i].remove();
+      } else {
+        tds[7].textContent = "!" + tds[7].textContent;
       }
+      
       // We either need to build a farm or we've skipped this village
       continue;
     }
