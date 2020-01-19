@@ -19,9 +19,10 @@ function doReports() {
   for (var i = 0; i < reports.length; i++) {
     var tds = reports[i].getElementsByTagName("td");
     var is_yellow = tds[1].innerHTML.includes("yellow.png");
+    var is_green = tds[1].innerHTML.includes("green.png");
     var is_barb = tds[1].innerText.includes("Barbarian Village") || tds[1].innerText.includes("Bonus Village");
     if (is_barb) {
-      if (is_yellow) {
+      if (is_yellow || is_green) {
         tds[0].getElementsByTagName("input")[0].click();
         checked = true;
       }
