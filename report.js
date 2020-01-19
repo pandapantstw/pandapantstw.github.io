@@ -8,8 +8,7 @@ var group_id = window.location.href.match(/group_id=([0-9a-z_]+)/);
 if (group_id != null) group_id = group_id[1];
 
 function goto(params) {
-  console.log(world_url + "/game.php?" + params);
-  //console.log(window.location.href = world_url + "/game.php?" + params);
+  console.log(window.location.href = world_url + "/game.php?" + params);
 }
 
 function doReports() {
