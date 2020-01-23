@@ -17,11 +17,14 @@ function doReports() {
   var checked = false;
   for (var i = 0; i < reports.length; i++) {
     var tds = reports[i].getElementsByTagName("td");
-    var is_yellow = tds[1].innerHTML.includes("yellow.png");
-    var is_green = tds[1].innerHTML.includes("green.png");
+    var images = tds[1].innerHTML.match(/\/graphic\/([a-z\/_]+)\.png/g);
+    var dot = tds[1].innerHTML.match(/\/dots\/([a-z_]+)\.png/);
+    if (dot.length != undefined) dot = dot[1];
+    var attack_size = tds[1].innerHTML.match(/\/command\/attack_([a-z_]+)\.png/);
+    if (attack_size.length != undefined) attack_size = attack_size[1];
     var is_barb = tds[1].innerText.includes("Barbarian Village") || tds[1].innerText.includes("Bonus Village");
-    if (is_barb) {
-      if (is_yellow || is_green) {
+    if (is_barb && attack_size == "small") {
+      if (dot == "yellow" || dot == "green") {
         tds[0].getElementsByTagName("input")[0].click();
         checked = true;
       }
