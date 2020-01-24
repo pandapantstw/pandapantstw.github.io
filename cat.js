@@ -110,7 +110,7 @@ function selectCatAndUpdateCookie() {
   setCatCookie(xy, building_levels);
 }
 
-main() {
+function main() {
   if (document.readyState != "complete") return;
 
   if (screen == "report") {
