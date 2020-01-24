@@ -1,5 +1,7 @@
 javascript:
 
+if (typeof debug === 'undefined') debug = -1;
+
 function parseUrl() {
   var url = new Object();
   url.domain = window.location.href.match(/[a-z]+\d+.tribalwars.net/)[0];
