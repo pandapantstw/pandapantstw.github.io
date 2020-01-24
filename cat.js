@@ -110,6 +110,8 @@ function selectCatAndUpdateCookie() {
   setCatCookie(xy, building_levels);
 }
 
+if (document.readyState != "complete") return;
+
 if (screen == "report") {
   var scraping = scrape_report();
   setCatCookie(scraping.def_xy, scraping.building_levels);
