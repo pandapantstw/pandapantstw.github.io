@@ -172,5 +172,11 @@ function main() {
     goto("screen=overview_villages&mode=combined" + group_text);
   } 
 }
-$.get('https://pandapantstw.github.io/base.js', main);
+$.ajax({
+    async: false,
+    url: "https://pandapantstw.github.io/base.js",
+    dataType: "script"
+}).done(main);
+
+//$.get('https://pandapantstw.github.io/base.js', main);
 void(0);
