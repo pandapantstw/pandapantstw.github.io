@@ -110,18 +110,21 @@ function selectCatAndUpdateCookie() {
   setCatCookie(xy, building_levels);
 }
 
-if (document.readyState != "complete") return;
+main() {
+  if (document.readyState != "complete") return;
 
-if (screen == "report") {
-  var scraping = scrape_report();
-  setCatCookie(scraping.def_xy, scraping.building_levels);
-  window.location.href = world_url + "/game.php?screen=place";
-} else if (screen == "place") {
-  if (screen_is_try_confirm) {
-    selectCatAndUpdateCookie();
+  if (screen == "report") {
+    var scraping = scrape_report();
+    setCatCookie(scraping.def_xy, scraping.building_levels);
+    window.location.href = world_url + "/game.php?screen=place";
+  } else if (screen == "place") {
+    if (screen_is_try_confirm) {
+      selectCatAndUpdateCookie();
+    } else {
+      fillCats();
+    }
   } else {
-    fillCats();
+    console.log("No command for " + screen);
   }
-} else {
-  console.log("No command for " + screen);
 }
+main();
