@@ -1,7 +1,5 @@
 javascript:
 
-if (typeof warehouse_ratio === 'undefined') debug = false;
-
 function parseUrl() {
   var url = new Object();
   url.domain = window.location.href.match(/[a-z]+\d+.tribalwars.net/)[0];
