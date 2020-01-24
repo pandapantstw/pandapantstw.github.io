@@ -160,7 +160,6 @@ function main() {
     attack_village();
   } else if (url.params.screen == "place") {
     if (url.params.try != "confirm") {
-      console.log(url.params.xy);
       if (url.params.xy == undefined) {
         attackNext();
       } else {
