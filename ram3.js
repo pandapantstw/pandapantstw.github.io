@@ -40,8 +40,7 @@ function attack_village() {
   goto("screen=place&xy=" + def_xy + "&wall=" + wall_level);
 }
 
-function fill_units(xy) {
-  var wall = url.params.wall;
+function fill_units(xy, wall) {
   if (wall > wall_rams.length - 1) wall = wall_rams.length - 1;
   document.forms[0].input.value = xy;
   document.forms[0].spy.value = 1;
@@ -145,8 +144,11 @@ function attackNext() {
     attackNext();
     return;
   }
-  
-  goto("screen=place&village=" + chosen_src_id + "&xy=" + target_xy + "&wall=" + wall);
+  if (url.params.village == chosen_src_id && url.params.screen == "place" && url.params.try != "confirm") {
+    fill_units(target_xy, wall);
+  } else {
+    goto("screen=place&village=" + chosen_src_id + "&xy=" + target_xy + "&wall=" + wall);
+  }
 }
 
 function main() {
@@ -163,7 +165,7 @@ function main() {
       if (url.params.xy == undefined) {
         attackNext();
       } else {
-        fill_units(url.params.xy);
+        fill_units(url.params.xy, url.params.wall);
       }
     }
   } else {
