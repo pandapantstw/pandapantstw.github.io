@@ -1,16 +1,5 @@
 javascript:
 
-var world_url = "https://" + window.location.href.match(/[a-z]+\d+.tribalwars.net/)[0];
-var screen = window.location.href.match(/screen=([a-z_]+)/)[1];
-var mode = window.location.href.match(/mode=([a-z_]+)/);
-if (mode != null) mode = mode[1];
-var group_id = window.location.href.match(/group_id=([0-9a-z_]+)/);
-if (group_id != null) group_id = group_id[1];
-
-function goto(params) {
-  console.log(window.location.href = world_url + "/game.php?" + params);
-}
-
 function doReports() {
   var reports = $("#report_list tr");
   reports = reports.slice(1, reports.length - 1);
@@ -31,9 +20,9 @@ function doReports() {
     }
   }
 }
-
-if (screen == "report" && mode == "attack" && group_id == "0") {
+function main() {
+  if (ensureUrl("screen=report&mode=attack&group_id=0")) return;
   doReports();
-} else {
-  goto("screen=report&mode=attack&group_id=0");
 }
+$.get('https://pandapantstw.github.io/base.js', main);
+void(0);
