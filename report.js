@@ -19,9 +19,9 @@ function doReports() {
     var tds = reports[i].getElementsByTagName("td");
     var images = tds[1].innerHTML.match(/\/graphic\/([a-z\/_]+)\.png/g);
     var dot = tds[1].innerHTML.match(/\/dots\/([a-z_]+)\.png/);
-    if (dot.length != undefined) dot = dot[1];
+    if (dot != undefined) dot = dot[1];
     var attack_size = tds[1].innerHTML.match(/\/command\/attack_([a-z_]+)\.png/);
-    if (attack_size.length != undefined) attack_size = attack_size[1];
+    if (attack_size != undefined) attack_size = attack_size[1];
     var is_barb = tds[1].innerText.includes("Barbarian Village") || tds[1].innerText.includes("Bonus Village");
     if (is_barb && attack_size == "small") {
       if (dot == "yellow" || dot == "green") {
