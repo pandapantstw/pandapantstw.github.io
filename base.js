@@ -1,6 +1,6 @@
 javascript:
 
-if (typeof debug === 'undefined') debug = -1;
+if (typeof debug === 'undefined') debug = false;
 
 function parseUrl() {
   var url = new Object();
