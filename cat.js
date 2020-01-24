@@ -111,7 +111,9 @@ function selectCatAndUpdateCookie() {
 }
 
 function main() {
+  if (document.clicked == true) return;
   if (document.readyState != "complete") return;
+  document.clicked = true;
 
   if (screen == "report") {
     var scraping = scrape_report();
