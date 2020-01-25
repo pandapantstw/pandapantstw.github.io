@@ -15,6 +15,21 @@ function parseUrl() {
 }
 var url = parseUrl();
 
+function getCookies() {
+  var raw_list = document.cookie.split("; ");
+  var cookies = new Object();
+  for (i = 0; i < raw_list.length; i++) {
+    var raw_split = raw_list[i].split("=");
+    cookies[raw_split[0]] = raw_split[1];
+  }
+  return cookies;
+}
+var cookies = getCookies();
+
+function setCookie(key, value) {
+  document.cookie = key + "=" + value + ";expires=-1";
+}
+
 function goto(params) {
   var target = "https://" + url.domain + "/game.php?" + params;
   if (debug) console.log(target);
