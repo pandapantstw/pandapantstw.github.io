@@ -19,6 +19,7 @@ function doReports() {
       }
     }
   }
+  if (checked) $('input[value="Move"]').click();
 }
 function main() {
   if (ensureUrl("screen=report&mode=attack&group_id=0")) return;
