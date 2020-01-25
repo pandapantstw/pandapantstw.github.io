@@ -72,7 +72,7 @@ function scrapeReport() {
 function getCatIndex(building_levels) {
   var max_index = -1;
   var max_level = 0;
-  for (var i = 0; i < building_levels.length; i++) { 
+  for (var i = 0; i < building_levels.length; i++) {
     if (building_levels[i] <= building_min[i]) continue;
     if (building_levels[i] <= max_level) continue;
     max_level = building_levels[i];
@@ -89,6 +89,9 @@ function getCatCookie() {
   var cat_cookie = cookies.cat.split(",");
   var xy = cat_cookie[0];
   cat_cookie.shift();
+  for (var i = 0; i < cat_cookie.length; i++) {
+    cat_cookie[i] = parseInt(cat_cookie[i]);
+  }
   return {xy : xy, building_levels : cat_cookie}
 }
 
