@@ -70,11 +70,15 @@ function scrapeReport() {
 }
 
 function getCatIndex(building_levels) {
-  var cat_index = 0;
-  while (cat_index < building_levels.length && building_levels[cat_index] <= building_min[cat_index]) {
-    cat_index++;
+  var max_index = -1;
+  var max_level = 0;
+  for (var i = 0; i < building_levels.length; i++) { 
+    if (building_levels[i] <= building_min[i]) continue;
+    if (building_levels[i] <= max_level) continue;
+    max_level = building_levels[i];
+    max_index = i;
   }
-  return cat_index;
+  return max_index;
 }
 
 function setCatCookie(xy, buildings) {
@@ -83,7 +87,6 @@ function setCatCookie(xy, buildings) {
 
 function getCatCookie() {
   var cat_cookie = cookies.cat.split(",");
-  console.log(cat_cookie);
   var xy = cat_cookie[0];
   cat_cookie.shift();
   return {xy : xy, building_levels : cat_cookie}
@@ -93,7 +96,7 @@ function doReport() {
   var scraping = scrapeReport();
   
   var cat_index = getCatIndex(scraping.building_levels);
-  if (cat_index == scraping.building_levels.length) {
+  if (cat_index == -1) {
     blacklistVilla(scraping.xy);
     return;
   }
@@ -108,7 +111,7 @@ function doPlace() {
   var building_levels = cat_cookie.building_levels;
   
   var cat_index = getCatIndex(building_levels);
-  if (cat_index == building_levels.length) {
+  if (cat_index == -1) {
     blacklistVilla(xy);
     goto("screen=map");
     return;
@@ -123,7 +126,7 @@ function doPlace() {
     spy = 1;
   }
   building_levels[cat_index]--;
-  if (getCatIndex(building_levels) == building_levels.length) {
+  if (getCatIndex(building_levels) == -1) {
     spy = 1;
   }
   
@@ -140,7 +143,7 @@ function selectCatAndUpdateCookie() {
   var building_levels = cat_cookie.building_levels;
   
   var cat_index = getCatIndex(building_levels);
-  if (cat_index == cat_cookie.length) {
+  if (cat_index == -1) {
     console.log("Done catting");
     return;
   }
