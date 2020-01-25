@@ -16,6 +16,7 @@ function distance_sq(a, b) {
 function nextBarb(villages) {
   for (v in villages) {
     if (villages[v].owner != 0) continue;
+    if (cookies.cat_blacklist.includes(villages[v].xy)) continue;
     return villages[v];
   }
   return undefined;
@@ -39,7 +40,10 @@ function doMap() {
 }
 
 function blacklistVilla(xy) {
-  console.log("blacklist " + xy);
+  xy = xy.replace("|", "");
+  if (cookies.cat_blacklist == undefined) cookies.cat_blacklist = "";
+  if (cookies.cat_blacklist.includes(xy)) return;
+  setCookie("cat_blacklist", xy + "," + cookies.cat_blacklist);
 }
 
 function doVillage() {
@@ -106,6 +110,7 @@ function doPlace() {
   var cat_index = getCatIndex(building_levels);
   if (cat_index == building_levels.length) {
     blacklistVilla(xy);
+    goto("screen=map");
     return;
   }
   
