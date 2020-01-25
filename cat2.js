@@ -1,18 +1,5 @@
 javascript:
 
-function getCookies() {
-  var raw_list = document.cookie.split("; ");
-  var cookies = new Object();
-  for (i = 0; i < raw_list.length; i++) {
-    var raw_split = raw_list[i].split("=");
-    cookies[raw_split[0]] = raw_split[1];
-  }
-  return cookies;
-}
-
-function setCookie(key, value) {
-  document.cookie = key + "=" + value + ";expires=-1";
-}
 
 function distance_sq(a, b) {
   ax = Math.floor(a / 1000);
@@ -30,13 +17,7 @@ function nextBarb(villages) {
   return undefined;
 }
 
-function gotoNextBarb() {
-  
-}
-
-function main() {
-  var cookies = getCookies();
-  console.log(cookies);
+function doMap() {
   var village_xy = parseInt($("#menu_row2_village")[0].parentElement.innerText.match(/\d+\|\d+/)[0].replace("|", ""));
   var villages = [];
   for (v in TWMap.villages) {
@@ -50,8 +31,33 @@ function main() {
   );
   
   var target = nextBarb(villages);
+  goto("screen=info_village&id=" + target.id);
+}
 
-  console.log(target);
+function blacklistVilla() {
+  
+}
+
+function doVillage() {
+  var reportList = $("#report_table tr:not(:first-child)");
+  if (reportList.length == 0) {
+    blacklistVilla();
+    return;
+  }
+  var reportHtml = reportList[0].innerHTML;
+  var reportId = reportHtml.match(/view=(\d+)/)[1];
+  goto("screen=report&mode=all&view=" + reportId);
+}
+
+function main() {
+  if (url.params.screen == "map") {
+    doMap();
+  } else if (url.params.screen == "info_village") {
+    doVillage();
+  } else {
+    goto("screen=map");
+  }
+
 }
 
 $.get('https://pandapantstw.github.io/base.js', main);
