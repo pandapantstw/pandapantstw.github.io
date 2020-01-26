@@ -1,8 +1,8 @@
 javascript:
 
+if (typeof max_range === 'undefined') max_range = 15;
 if (typeof group_id === 'undefined') group_id = -1;
 
-var max_range = 15;
 var village_xy = $("#menu_row2_village")[0].parentElement.innerText.match(/\d+\|\d+/)[0];
 
 var wall_rams = [0,2,4,7,10,15,20,25,31,38,46];
