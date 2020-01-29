@@ -178,7 +178,7 @@ function main() {
   } else {
     goto("screen=map");
   }
-
+  document.finished = true;
 }
 
 $.get('https://pandapantstw.github.io/base.js', main);
