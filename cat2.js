@@ -100,7 +100,8 @@ function doReport() {
   
   var cat_index = getCatIndex(scraping.building_levels);
   if (cat_index == -1) {
-    blacklistVilla(scraping.xy);
+    blacklistVilla(scraping.def_xy);
+    goto("screen=map");
     return;
   }
   
