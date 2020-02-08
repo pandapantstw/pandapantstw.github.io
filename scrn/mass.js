@@ -24,7 +24,6 @@ function parseMassRecruitVillages() {
   return villages;
 }
 var villages = parseMassRecruitVillages();
-console.log(villages);
 
 function parseUnitNames() {
   var rows = $("#mass_train_table tr");
