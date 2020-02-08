@@ -2,9 +2,9 @@ javascript:
 
 function parseMassRecruitVillages() {
   var rows = $("#mass_train_table tr:not(:first):visible");
-  var villages = new Object();
+  var villages = [];
   for (var i = 0; i < rows.length; i++) {
-    villages[i] = new Object();
+    villages = villages.concat(new Object());
     var cols = rows[i].children;
     villages[i].name = cols[0].innerText;
     villages[i].res = cols[1].innerText.replace(/\./g, "").split("\n");
