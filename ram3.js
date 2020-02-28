@@ -135,8 +135,9 @@ function attackNext() {
     chosen_distance_sq = src_distance_sq;
   }
   if (chosen_src_id == 0) {
-    console.log("No one with enough rams");
-    return;
+    chosen_src_id = url.params.village;
+    var village_xy = $("#menu_row2_village")[0].parentElement.innerText.match(/\d+\|\d+/)[0];
+    chosen_distance_sq = sq_distance(village_xy, target_xy);
   }
   target_list = target_list.slice(1, target_list.length);
   setCookie("ram2_dst", target_list.join(), 1);
